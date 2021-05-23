@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 const appStyle = {
     height: "250px",
@@ -78,11 +79,15 @@ const Form = ({ onSubmit }) => {
 // Usage example:
 
 const LoginForm = () => {
+    const history = useHistory();
+
     const handleSubmit = (data) => {
         const json = JSON.stringify(data, null, 4);
         console.clear();
         console.log(json);
+        history.push("/inbox");
     };
+
     return (
         <div style={appStyle}>
             <Form onSubmit={handleSubmit} />
