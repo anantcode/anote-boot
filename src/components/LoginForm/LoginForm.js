@@ -85,7 +85,13 @@ const LoginForm = () => {
         const json = JSON.stringify(data, null, 4);
         console.clear();
         console.log(json);
-        history.push("/inbox");
+        if (data.username === "anant") {
+            console.log("here1");
+            history.push("/inbox");
+        } else {
+            console.log("here2");
+            history.push("/error");
+        }
     };
 
     return (

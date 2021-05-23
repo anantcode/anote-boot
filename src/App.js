@@ -3,6 +3,7 @@ import Header from "./components/Header/Header";
 import LoginForm from "./components/LoginForm/LoginForm";
 import Inbox from "./components/Inbox/Inbox";
 import { Route, Switch } from "react-router-dom";
+import Error from "./components/Error/Error";
 
 function App() {
     return (
