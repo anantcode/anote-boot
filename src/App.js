@@ -1,6 +1,7 @@
 import "./App.css";
 import Header from "./components/Header/Header";
-import LoginForm from "./components/LoginForm/LoginForm";
+import SigninForm from "./components/SigninForm/SigninForm";
+import RegisterForm from "./components/RegisterForm/RegisterForm";
 import Inbox from "./components/Inbox/Inbox";
 import { Route, Switch } from "react-router-dom";
 import Error from "./components/Error/Error";
@@ -22,20 +23,16 @@ class App extends Component {
     }
 
     render() {
-        // const filteredPeople = this.state.people.filter((item) => {
-        //     return item.name.toLowerCase().includes("a");
-        // });
-
         const filteredPeople = this.state.people;
-
         return (
             <main>
                 {/* <Navbar /> */}
                 <Header />
                 <Switch>
-                    <Route path="/" component={LoginForm} exact />
-                    {/* <Route path="/about" component={About} /> */}
-                    <Route path="/login" component={LoginForm} />
+                    <Route path="/" component={SigninForm} exact />
+                    <Route path="/signin" component={SigninForm} exact />
+                    <Route path="/register" component={RegisterForm} exact />
+
                     <Route
                         path="/inbox"
                         render={(props) => (

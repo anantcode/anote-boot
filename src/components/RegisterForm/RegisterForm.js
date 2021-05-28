@@ -6,6 +6,10 @@ const appStyle = {
     display: "flex",
 };
 
+const headingStyle = {
+    margin: "auto",
+};
+
 const formStyle = {
     margin: "auto",
     padding: "10px",
@@ -64,27 +68,39 @@ const Form = ({ onSubmit }) => {
         onSubmit(data);
     };
     return (
-        <form style={formStyle} onSubmit={handleSubmit}>
-            <Field ref={usernameRef} label="Username:" type="text" />
-            <Field ref={passwordRef} label="Password:" type="password" />
-            <div>
-                <button style={submitStyle} type="submit">
-                    Submit
-                </button>
-            </div>
-        </form>
+        <div style={headingStyle}>
+            <h3>Register</h3>
+            <form style={formStyle} onSubmit={handleSubmit}>
+                <Field ref={usernameRef} label="Username:" type="text" />
+                <Field ref={passwordRef} label="Password:" type="password" />
+                <div>
+                    <button style={submitStyle} type="submit">
+                        Regsiter
+                    </button>
+                </div>
+            </form>
+        </div>
     );
 };
 
 // Usage example:
 
-const LoginForm = () => {
+const RegisterForm = () => {
     const history = useHistory();
 
     const handleSubmit = (data) => {
         const json = JSON.stringify(data, null, 4);
         console.clear();
         console.log(json);
+
+        //TODO client side validation of input
+
+        //call register endpoint
+
+        fetch("http://localhost:3001/register")
+            .then((res) => res.json())
+            .then((data) => console.log);
+
         if (data.username === "anant") {
             console.log("here1");
             history.push("/inbox");
@@ -101,4 +117,4 @@ const LoginForm = () => {
     );
 };
 
-export default LoginForm;
+export default RegisterForm;
