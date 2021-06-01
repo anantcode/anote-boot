@@ -11,19 +11,22 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
-            people: [],
-            searchField: "",
+            route: "signin",
         };
     }
 
     componentDidMount() {
-        fetch("https://jsonplaceholder.typicode.com/users")
-            .then((res) => res.json())
-            .then((users) => this.setState({ people: users }));
+        // fetch("https://jsonplaceholder.typicode.com/users")
+        //     .then((res) => res.json())
+        //     .then((users) => this.setState({ people: users }));
     }
 
     render() {
-        const filteredPeople = this.state.people;
+        this.state.messages = [
+            { name: "Anant", email: "g@rv.vom", id: "1" },
+            { name: "Anant1", email: "g1@rv.vom", id: "11" },
+        ];
+
         return (
             <main>
                 {/* <Navbar /> */}
@@ -36,7 +39,7 @@ class App extends Component {
                     <Route
                         path="/inbox"
                         render={(props) => (
-                            <Inbox {...props} people={filteredPeople} />
+                            <Inbox {...props} messages={this.state.messages} />
                         )}
                     />
                     <Route component={Error} />

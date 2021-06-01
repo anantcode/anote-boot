@@ -4,7 +4,7 @@ import MessageList from "../../components/MessageList/MessageList";
 const Inbox = (props) => {
     return (
         <div>
-            <MessageList people={props.people} />
+            <MessageList messages={props.messages} />
         </div>
     );
 };

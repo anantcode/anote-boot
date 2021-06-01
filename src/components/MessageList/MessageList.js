@@ -1,8 +1,8 @@
 import React from "react";
 import Message from "../../components/Message/Message";
 
-const MessageList = ({ people }) => {
-    const cards = people.map((user) => {
+const MessageList = ({ messages }) => {
+    const cards = messages.map((user) => {
         return (
             <Message
                 key={user.id}

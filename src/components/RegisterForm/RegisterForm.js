@@ -97,17 +97,15 @@ const RegisterForm = () => {
 
         //call register endpoint
 
-        fetch("http://localhost:3001/register")
-            .then((res) => res.json())
-            .then((data) => console.log);
-
-        if (data.username === "anant") {
-            console.log("here1");
-            history.push("/inbox");
-        } else {
-            console.log("here2");
-            history.push("/error");
-        }
+        fetch("http://localhost:3001/register", {
+            method: "POST", // or 'PUT'
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+            .then((res) => res.json()) // TODO take user to inbox. TODO if 0 msgs show link and suggest to share.
+            .then((res) => console.log(res));
     };
 
     return (
