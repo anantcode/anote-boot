@@ -1,16 +1,10 @@
 import React from "react";
 import Message from "../../components/Message/Message";
 
-const MessageList = ({ messages }) => {
-    const cards = messages.map((user) => {
-        return (
-            <Message
-                key={user.id}
-                id={user.id}
-                name={user.name}
-                email={user.email}
-            />
-        );
+const MessageList = (props) => {
+    const { messages } = props;
+    const cards = messages.map((msg) => {
+        return <Message message={msg} />;
     });
     return <div>{cards}</div>;
 };
