@@ -1,5 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { useState } from "react";
 
 const appStyle = {
     height: "250px",
@@ -85,20 +86,36 @@ const Form = ({ onSubmit }) => {
 
 // Usage example:
 
-const SigninForm = () => {
+const SigninForm = (props) => {
     const history = useHistory();
+    let { setUserData, loadMessages } = props;
 
     const handleSubmit = (data) => {
-        const json = JSON.stringify(data, null, 4);
         console.clear();
-        console.log(json);
-        if (data.username === "anant") {
-            console.log("here1");
-            history.push("/inbox");
-        } else {
-            console.log("here2");
-            history.push("/error");
-        }
+        console.log(`Going to send data to signin: ${JSON.stringify(data)}`);
+        let userData;
+
+        //TODO make service call
+        fetch("http://localhost:3001/signin", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                console.log(res);
+                userData = res;
+                // TODO take user to inbox. TODO if 0 msgs show link and suggest to share.
+                if (userData.id) {
+                    setUserData(userData);
+                    loadMessages({ userId: userData.id });
+                    history.push("/inbox");
+                } else {
+                    history.push("/error");
+                }
+            });
     };
 
     return (

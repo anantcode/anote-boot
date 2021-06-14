@@ -3,50 +3,64 @@ import Header from "./components/Header/Header";
 import SigninForm from "./components/SigninForm/SigninForm";
 import RegisterForm from "./components/RegisterForm/RegisterForm";
 import Inbox from "./components/Inbox/Inbox";
-import { Route, Switch } from "react-router-dom";
+import { Route, Redirect, Switch } from "react-router-dom";
 import Error from "./components/Error/Error";
-import { Component } from "react";
+import { useState } from "react";
 
-class App extends Component {
-    constructor() {
-        super();
-        this.state = {
-            route: "signin",
-        };
-    }
+function App() {
+    const userDataDefault = {
+        id: "",
+        name: "",
+        email: "",
+        password: "",
+    };
 
-    componentDidMount() {
-        // fetch("https://jsonplaceholder.typicode.com/users")
-        //     .then((res) => res.json())
-        //     .then((users) => this.setState({ people: users }));
-    }
+    const [userData, setUserData] = useState(userDataDefault);
+    const [messages, setMessages] = useState([]);
 
-    render() {
-        this.state.messages = [
-            { name: "Anant", email: "g@rv.vom", id: "1" },
-            { name: "Anant1", email: "g1@rv.vom", id: "11" },
-        ];
+    const loadMessages = (data) => {
+        console.log(`userId going to fetch from Inbox Component:  ${data.id}`);
+        let msgs;
+        fetch("http://localhost:3001/messages", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+            .then((res) => res.json()) // TODO take user to inbox. TODO if 0 msgs show link and suggest to share.
+            .then((res) => {
+                console.log(res);
+                setMessages(res);
+            });
+        return msgs;
+    };
 
-        return (
-            <main>
-                {/* <Navbar /> */}
-                <Header />
-                <Switch>
-                    <Route path="/" component={SigninForm} exact />
-                    <Route path="/signin" component={SigninForm} exact />
-                    <Route path="/register" component={RegisterForm} exact />
-
-                    <Route
-                        path="/inbox"
-                        render={(props) => (
-                            <Inbox {...props} messages={this.state.messages} />
-                        )}
+    return (
+        <div>
+            <Header />
+            <Switch>
+                <Route path="/" exact>
+                    <Redirect to="/signin" />
+                </Route>
+                <Route path="/signin">
+                    <SigninForm
+                        setUserData={setUserData}
+                        loadMessages={loadMessages}
                     />
-                    <Route component={Error} />
-                </Switch>
-            </main>
-        );
-    }
+                </Route>
+                <Route path="/register">
+                    <RegisterForm setUserData={setUserData} />
+                </Route>
+                <Route path="/inbox">
+                    <Inbox userData={userData} messages={messages} />
+                </Route>
+                <Route path="/error">
+                    <Error />
+                </Route>
+            </Switch>
+        </div>
+    );
 }
 
 export default App;

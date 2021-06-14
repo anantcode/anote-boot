@@ -85,11 +85,13 @@ const Form = ({ onSubmit }) => {
 
 // Usage example:
 
-const RegisterForm = () => {
+const RegisterForm = (props) => {
     const history = useHistory();
+    const { setUserData } = props;
+    let userData;
 
     const handleSubmit = (data) => {
-        const json = JSON.stringify(data, null, 4);
+        const json = JSON.stringify(data);
         console.clear();
         console.log(json);
 
@@ -104,7 +106,17 @@ const RegisterForm = () => {
             },
             body: JSON.stringify(data),
         })
-            .then((res) => res.json()) // TODO take user to inbox. TODO if 0 msgs show link and suggest to share.
+            .then((res) => {
+                userData = res;
+                // TODO take user to inbox. TODO if 0 msgs show link and suggest to share.
+                if (userData.id) {
+                    setUserData(userData);
+                    history.push("/inbox");
+                } else {
+                    history.push("/error");
+                }
+                return res.json();
+            })
             .then((res) => console.log(res));
     };
 

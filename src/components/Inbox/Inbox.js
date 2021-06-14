@@ -2,9 +2,13 @@ import React from "react";
 import MessageList from "../../components/MessageList/MessageList";
 
 const Inbox = (props) => {
+    const { userData, messages } = props;
+    console.log(messages);
+
     return (
         <div>
-            <MessageList messages={props.messages} />
+            <div>Welcome, {userData.name}</div>
+            <MessageList messages={messages} />
         </div>
     );
 };
