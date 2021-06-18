@@ -88,7 +88,7 @@ const Form = ({ onSubmit }) => {
 
 const SigninForm = (props) => {
     const history = useHistory();
-    let { setUserData, loadMessages } = props;
+    let { setUserData, loadMessages, setLogout } = props;
 
     const handleSubmit = (data) => {
         console.clear();
@@ -111,6 +111,7 @@ const SigninForm = (props) => {
                 if (userData.id) {
                     setUserData(userData);
                     loadMessages({ userId: userData.id });
+                    setLogout(false);
                     history.push("/inbox");
                 } else {
                     history.push("/error");

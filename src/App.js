@@ -3,6 +3,7 @@ import Header from "./components/Header/Header";
 import SigninForm from "./components/SigninForm/SigninForm";
 import RegisterForm from "./components/RegisterForm/RegisterForm";
 import Inbox from "./components/Inbox/Inbox";
+import Logout from "./components/Logout/Logout";
 import { Route, Redirect, Switch } from "react-router-dom";
 import Error from "./components/Error/Error";
 import { useState } from "react";
@@ -17,6 +18,7 @@ function App() {
 
     const [userData, setUserData] = useState(userDataDefault);
     const [messages, setMessages] = useState([]);
+    const [logout, setLogout] = useState(true);
 
     const loadMessages = (data) => {
         console.log(`userId going to fetch from Inbox Component:  ${data.id}`);
@@ -36,9 +38,16 @@ function App() {
         return msgs;
     };
 
+    const performLogout = () => {
+        console.log("You are logged out!");
+        setLogout(true);
+        setUserData(userDataDefault);
+    };
+
     return (
         <div>
             <Header />
+            <Logout logout={logout} performLogout={performLogout} />
             <Switch>
                 <Route path="/" exact>
                     <Redirect to="/signin" />
@@ -47,6 +56,7 @@ function App() {
                     <SigninForm
                         setUserData={setUserData}
                         loadMessages={loadMessages}
+                        setLogout={setLogout}
                     />
                 </Route>
                 <Route path="/register">
