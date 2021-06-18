@@ -1,17 +1,16 @@
 import { Link } from "react-router-dom";
 
 const Logout = (props) => {
-    const { logout, performLogout } = props;
+    const { loggedIn, performLogout } = props;
 
-    if (logout) {
-        return "";
+    if (loggedIn) {
+        return (
+            <Link to="/signin">
+                <p onClick={performLogout}>Log Out</p>
+            </Link>
+        );
     }
-
-    return (
-        <Link to="/signin">
-            <p onClick={performLogout}>Log Out</p>
-        </Link>
-    );
+    return "";
 };
 
 export default Logout;
